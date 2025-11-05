@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Until the Last Pill</title>
+  <link rel="icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Creepster&display=swap" rel="stylesheet">
+  <style>
+    .download-btns {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 2.1rem;
+      margin: 0.3rem auto;
+      flex-wrap: wrap;
+    }
+    .big-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #ff5fa3 70%, #76eaff 100%);
+      color: #fff;
+      font-family: 'Creepster', 'Courier New', monospace;
+      font-size: 2rem;
+      font-weight: bold;
+      padding: 1.1rem 2.4rem;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 4px 18px #ff5fa389, 0 0 16px #76eaff77;
+      letter-spacing: 2px;
+      border: none;
+      transition: box-shadow 0.22s, background 0.22s, color 0.14s, transform 0.14s;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    .big-btn:hover,
+    .big-btn:focus {
+      color: #101113;
+      background: linear-gradient(90deg, #76eaff 70%, #ff5fa3 100%);
+      box-shadow: 0 6px 32px #76eaff99, 0 1px 18px #ff5fa399;
+      transform: scale(1.04);
+      opacity: 0.96;
+    }
+    :root {
+      --horror-pink: #ff5fa3;
+      --blue-accent: #76eaff;
+      --soft-blue: #a8f6ed;
+      --deep-blue: #222f49;
+      --body-grey: #e2e4e8;
+      --faint-blue: #bae6ff;
+      --subtle-purple: #7b89c3;
+    }
+    h1 {
+      font-family: 'Creepster', 'Courier New', monospace;
+      margin: 0;
+      padding: 0.2em 0;
+      font-size: 3.2rem;
+      color: var(--horror-pink);
+      letter-spacing: 7px;
+      text-align: center;
+      width: 100%;
+      display: block;
+      text-shadow: 0 0 10px var(--horror-pink), 0 0 2px #fff7;
+      line-height: 1.1;
+    }
+    .section h2,
+    .subtitle,
+    .enemy-card h3,
+    .how-to-survive-card h2,
+    .how-to-survive-card strong,
+    .enemy-card .details strong,
+    .enemy-card .details ul li {
+      font-family: 'Creepster', 'Courier New', monospace;
+      letter-spacing: 2px;
+      color: var(--blue-accent);
+      text-shadow: 0 0 6px var(--soft-blue), 0 0 2px #fff2;
+      text-align: center;
+    }
+    .section h2 {
+      font-size: 2rem;
+      margin: 0.7em 0 0.4em 0;
+    }
+    .subtitle {
+      font-size: 1.15rem;
+      margin-bottom: 2.2em;
+    }
+    .enemy-card h3 {
+      font-size: 1.45rem;
+      margin-bottom: 0.3rem;
+    }
+    .how-to-survive-card h2 {
+      font-size: 1.45rem;
+      margin: 0 0 1em 0;
+    }
+    .how-to-survive-card strong,
+    .enemy-card .details strong {
+      font-size: 1.1em;
+      letter-spacing: 1.2px;
+      margin-right: 5px;
+    }
+    .how-to-survive-card ul li span {
+      color: var(--body-grey);
+    }
+    .expand-btn {
+      background: #222a30;
+      color: var(--horror-pink);
+      border: none;
+      border-radius: 9px;
+      padding: 0.45rem 1.1rem;
+      margin: 0.65rem 0 0.3rem 0;
+      font-size: 0.97rem;
+      font-family: inherit;
+      letter-spacing: 0.7px;
+      box-shadow: 0 0 7px var(--horror-pink) inset;
+      cursor: pointer;
+      outline: none;
+      transition: background 0.18s, color 0.18s, box-shadow 0.2s;
+      animation: pulse 1.5s infinite;
+    }
+    .expand-btn:hover,
+    .expand-btn:focus {
+      background: var(--blue-accent);
+      color: var(--deep-blue);
+    }
+    @keyframes pulse {
+      0%,
+      100% {
+        box-shadow: 0 0 8px var(--horror-pink);
+      }
+      50% {
+        box-shadow: 0 0 15px var(--horror-pink);
+      }
+    }
+    .trailer-embed {
+      width: 97vw;
+      max-width: 2000px;
+      margin: 2rem auto 3rem auto;
+      box-shadow: 0 3px 20px #ff5fa399, 0 0 28px #76eaff55;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .trailer-embed iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      min-height: 340px;
+      border: none;
+      display: block;
+      background: #000;
+    }
+    @media (max-width: 700px) {
+      .trailer-embed iframe {
+        min-height: 220px;
+      }
+    }
+    .enemy-card p,
+    .details {
+      color: var(--body-grey);
+      text-align: left;
+    }
+    .pill {
+      display: inline-block;
+      width: 14px;
+      height: 7px;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #fff 50%, var(--horror-pink) 50%);
+      box-shadow: 0 0 8px var(--horror-pink), 0 1px 2px var(--blue-accent);
+      margin: 0 1px;
+      vertical-align: middle;
+      animation: pill-glow 1.3s infinite alternate;
+    }
+    @keyframes pill-glow {
+      from {
+        box-shadow: 0 0 8px var(--horror-pink), 0 1px 2px var(--blue-accent);
+      }
+      to {
+        box-shadow: 0 0 16px var(--blue-accent), 0 1px 6px var(--soft-blue);
+      }
+    }
+    .enemy-card {
+      background: #161a1e;
+      border: 1.5px solid #191b23;
+      border-radius: 14px;
+      width: 350px;
+      margin-bottom: 2.1rem;
+      padding: 1.2rem 1rem 2rem 1rem;
+      box-shadow: 0 2px 18px #202840bb;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.18s, transform 0.14s, box-shadow 0.17s;
+    }
+    .enemy-card:hover,
+    .enemy-card:focus {
+      background: #182938;
+      transform: scale(1.04) rotate(-1deg);
+      box-shadow: 0 6px 38px #45acd0bb, 0 1px 12px #222f4988;
+      z-index: 1;
+    }
+    .video-frame {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #101113;
+      box-shadow: 0 0 8px #45acd055, 0 3px 24px #15151977;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1.1rem;
+    }
+    .video-frame iframe,
+    .video-frame video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+    .details {
+      display: none;
+      font-size: 0.93rem;
+      padding: 0.52rem 0.12rem 0.3rem 0.12rem;
+      border-top: 1px solid #22323b44;
+      margin-top: 0.5rem;
+      animation: fadein 0.26s;
+    }
+    .enemy-card.expanded .details {
+      display: block;
+    }
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .enemies {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.2em;
+      width: 100%;
+    }
+    .enemy-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 2.8em;
+      width: 100%;
+    }
+    @media (max-width: 1200px) {
+      .enemy-row {
+        gap: 1em;
+      }
+      .enemy-card {
+        width: 32vw;
+        min-width: 220px;
+      }
+    }
+    @media (max-width: 900px) {
+      .enemy-row {
+        flex-wrap: wrap;
+      }
+      .enemy-card {
+        width: 96vw;
+      }
+    }
+    @media (max-width: 600px) {
+      .enemy-row {
+        flex-direction: column;
+        align-items: center;
+      }
+      .enemy-card {
+        width: 97vw;
+      }
+    }
+    .how-to-survive-card {
+      background: linear-gradient(135deg, #101518e6 80%, #273142d5 100%);
+      border: 2px solid var(--blue-accent);
+      border-radius: 16px;
+      box-shadow: 0 6px 32px #10171dbb, 0 0 12px var(--blue-accent) inset;
+      max-width: 600px;
+      margin: 2.8rem auto 1.5rem auto;
+      padding: 2.1rem 2rem 1.3rem 2rem;
+      text-align: left;
+      font-size: 1.10rem;
+      position: relative;
+      z-index: 2;
+    }
+    .how-to-survive-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 1.5em 0 0 0;
+    }
+    .how-to-survive-card li {
+      margin-bottom: 1.2em;
+      padding-left: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5em;
+    }
+    .how-to-survive-card kbd {
+      font-family: monospace;
+      background: #222e;
+      color: var(--blue-accent);
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin: 0 3px;
+      font-weight: bold;
+      font-size: 0.98em;
+      box-shadow: 0 1px 4px var(--blue-accent) inset;
+      border: 1px solid #2223;
+    }
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1rem 0.5rem 1rem;
+    }
+    header img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #181818;
+      box-shadow: 0 0 8px var(--blue-accent);
+      margin-bottom: 0.5em;
+    }
+    body {
+      color: var(--body-grey);
+      background: #101113;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .section {
+      padding: 2rem 1rem 0.5rem 1rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .rec-date {
+      color: var(--faint-blue);
+      background: #182026d0;
+      border: 1px solid #34444b;
+      position: fixed;
+      top: 13px;
+      right: 19px;
+      font-size: 0.8rem;
+      opacity: 0.72;
+      z-index: 10;
+      user-select: none;
+      letter-spacing: 1px;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    @keyframes flicker {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.88;
+      }
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      background: repeating-linear-gradient(rgba(118, 234, 255, 0.017) 0px,
+          rgba(118, 234, 255, 0.017) 1px,
+          transparent 2px, transparent 4px);
+      animation: flicker 0.12s infinite;
+      z-index: 0;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(110vh) rotate(52deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="logo insta sem fundo.png" alt="Game Logo"
+      style="display:block; margin:0 auto 0.5em auto; width: 90px;" />
+    <h1>Until the Last Pill</h1>
+    <div class="download-btns">
+      <a href="LINK_TO_YOUR_GAME.zip" class="big-btn" download>
+        ⬇️ Direct Download
+      </a>
+      <a href="https://YOUR-ITCHIO-PAGE.itch.io" class="big-btn" target="_blank" rel="noopener">
+        ⬇️ Download on itch.io
+      </a>
+    </div>
+    <div class="trailer-embed">
+      <iframe src="https://www.youtube.com/embed/77S8Plts8EI" title="Until the Last Pill - Official Trailer"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </header>
+  <div class="section">
+    <h2>The Enemies</h2>
+    <div class="enemies" aria-label="Enemies List">
+      <div class="enemy-row">
+        <!-- Door Demon -->
+        <article class="enemy-card" tabindex="0" aria-labelledby="enemy1" onclick="expandCard(this)"
+          onkeypress="event.key==='Enter' && expandCard(this)">
+          <h3 id="enemy1">Door Demon</h3>
+          <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/346d2PRTulw" allowfullscreen></iframe>
+          </div>
+          <p>An unkillable fragment haunting your front door. It cannot be moved by force or steel.</p>
+          <button class="expand-btn" type="button" role="button" aria-expanded="false">More Details</button>
+          <div class="details">
+            <p><strong>Lore:</strong> The Door Demon isn’t “real” in the usual sense. He’s a manifestation of your fractured mind, looming always at the threshold.</p>
+            <p><strong>How to Deal:</strong> Bullets are useless. The only way to ward him off is to take a special pill designed to hold back your symptoms while you wait for the true cure over the coming five days.</p>
+            <p><strong>Warning:</strong> Never ignore him. His presence means the end draws near if you don’t act.</p>
+          </div>
+        </article>
+        <!-- The Nurse -->
+        <article class="enemy-card" tabindex="0" aria-labelledby="enemy2" onclick="expandCard(this)"
+          onkeypress="event.key==='Enter' && expandCard(this)">
+          <h3 id="enemy2">The Nurse</h3>
+          <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/MlrZkkjpfhI" allowfullscreen></iframe>
+          </div>
+          <p>An eerie silhouette at your window. She grows bolder with each passing night.</p>
+          <button class="expand-btn" type="button" role="button" aria-expanded="false">More Details</button>
+          <div class="details">
+            <p><strong>Lore:</strong> Once comforting, now menacing. The Nurse visits as the moon rises, her shape barely visible through the glass.</p>
+            <p><strong>How to Deal:</strong> If you see her in the window, immediately close the curtain. She will vanish into the night. Be warned: she becomes stealthier and appears more unexpectedly as your nights get longer.</p>
+            <p><strong>Effect:</strong> She won't kill you, but a brief encounter will badly worsen your insanity, making the game more dangerous.</p>
+          </div>
+        </article>
+        <!-- The Clown -->
+        <article class="enemy-card" tabindex="0" aria-labelledby="enemy5" onclick="expandCard(this)"
+          onkeypress="event.key==='Enter' && expandCard(this)">
+          <h3 id="enemy5">The Clown</h3>
+          <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/-7pE4M3KAzY" allowfullscreen></iframe>
+          </div>
+          <p>You hear his laughter echoing around you. Watch the cameras or become his next victim.</p>
+          <button class="expand-btn" type="button" role="button" aria-expanded="false">More Details</button>
+          <div class="details">
+            <p><strong>Lore:</strong> The Clown never truly leaves. He toys with you through the monitors and plots each move with mirthless giggles.</p>
+            <p><strong>How to Deal:</strong> When you hear his laughter, immediately check the cameras. He starts at the entrance, moves toward the axe room near the stairs, then upstairs to hunt you.</p>
+            <ul>
+              <li>Use the camera flash as he moves. This sends him back to his last location before advancing.</li>
+              <li>Once he’s upstairs, the flash no longer works, except in the final stage. Staring at him on camera will freeze him in place.</li>
+              <li>If you see him sprinting down the last corridor, flash quickly. This is your final chance, or he will burst into your room.</li>
+            </ul>
+            <p><strong>Warning:</strong> His pattern escalates. Always watch. Always listen.</p>
+          </div>
+        </article>
+      </div>
+      <div class="enemy-row">
+        <!-- Plushie Right -->
+        <article class="enemy-card" tabindex="0" aria-labelledby="enemy3" onclick="expandCard(this)"
+          onkeypress="event.key==='Enter' && expandCard(this)">
+          <h3 id="enemy3">Vent Plushie (Right)</h3>
+          <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/lB5YDHrBNjw" allowfullscreen></iframe>
+          </div>
+          <p>Small but deadly. It lurks in the vent to your right, waiting to strike.</p>
+          <button class="expand-btn" type="button" role="button" aria-expanded="false">More Details</button>
+          <div class="details">
+            <p><strong>Lore:</strong> Its stitched-on smile hides feral intent. The right vent is its chosen path.</p>
+            <p><strong>How to Deal:</strong> When you spot this plushie, quickly use the revolver at your side. One bullet sends it fleeing back into the darkness.</p>
+          </div>
+        </article>
+        <!-- Plushie Top -->
+        <article class="enemy-card" tabindex="0" aria-labelledby="enemy4" onclick="expandCard(this)"
+          onkeypress="event.key==='Enter' && expandCard(this)">
+          <h3 id="enemy4">Vent Plushie (Top)</h3>
+          <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/ncqfRreEzX8" allowfullscreen></iframe>
+          </div>
+          <p>This one drops from above, stalking you through the ceiling vent.</p>
+          <button class="expand-btn" type="button" role="button" aria-expanded="false">More Details</button>
+          <div class="details">
+            <p><strong>Lore:</strong> No bigger than a toy, and twice as cruel. It crawls through the overhead vent in silence.</p>
+            <p><strong>How to Deal:</strong> Keep your revolver ready. As soon as you see it in the vent, fire once to make it retreat.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="margin-top:2.2rem;">
+    <div class="how-to-survive-card">
+      <h2 style="font-size:2.4rem; text-align:center; letter-spacing:3px; margin-bottom:1.3em;">
+        How to Survive the Night
+      </h2>
+      <ul class="mechanics-list" style="list-style:none;padding:0;margin:0;">
+        <li class="mechanic-row">
+          <span class="mechanic-icon" aria-hidden="true" style="font-size:1.4em;margin-right:0.5em;"></span>
+          <div>
+            <strong>Insanity Meter:</strong>
+            <span>Your insanity slowly rises as the night progresses. The higher it gets, the darker your room becomes and your breathing gets louder. Eventually, the Door Demon starts appearing.</span>
+          </div>
+        </li>
+        <li class="mechanic-row">
+          <span class="mechanic-icon" aria-hidden="true" style="font-size:1.3em;margin-right:0.5em;"></span>
+          <div>
+            <strong>Pills (<kbd>E</kbd>):</strong>
+            <span>Taking a pill temporarily lowers your insanity. Supplies are limited, so make every use count. If you run out, the night becomes far harder to survive.</span>
+          </div>
+        </li>
+        <li class="mechanic-row">
+          <span class="mechanic-icon" aria-hidden="true" style="font-size:1.3em;margin-right:0.5em;"></span>
+          <div>
+            <strong>PC & Cameras (<kbd>Space</kbd>):</strong>
+            <span>Open surveillance, switch views, and use the flash button whenever you need to keep enemies away.</span>
+          </div>
+        </li>
+        <li class="mechanic-row">
+          <span class="mechanic-icon" aria-hidden="true" style="font-size:1.3em;margin-right:0.5em;"></span>
+          <div>
+            <strong>Revolver:</strong>
+            <span>You get six bullets. Reload one at a time with <kbd>R</kbd>. Conserve your ammo and reload wisely.</span>
+          </div>
+        </li>
+        <li class="mechanic-row">
+          <span class="mechanic-icon" aria-hidden="true" style="font-size:1.3em;margin-right:0.5em;"></span>
+          <div>
+            <strong>Window Curtain:</strong>
+            <span>The curtain opens only for the Nurse. Close it quickly to make her go away and keep your mind safe.</span>
+          </div>
+        </li>
+        <li class="mechanic-row">
+          <span class="mechanic-icon" aria-hidden="true" style="font-size:1.3em;margin-right:0.5em;"></span>
+          <div>
+            <strong>General Advice:</strong>
+            <span>Listen and watch carefully. Letting insanity grow, wasting pills, or running out of bullets can end your night. Every choice counts.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="rec-date">REC ● 2025-10-24</div>
+  <script>
+    // Animated pills falling effect
+    document.addEventListener('DOMContentLoaded', () => {
+      for (let i = 0; i < 26; i++) {
+        const pill = document.createElement('div');
+        pill.className = 'pill';
+        pill.style.position = 'fixed';
+        pill.style.top = '-60px';
+        pill.style.left = (Math.random() * 100) + 'vw';
+        pill.style.opacity = (0.66 + Math.random() * 0.36).toFixed(2);
+        const duration = (4 + Math.random() * 4.5).toFixed(2);
+        pill.style.animation = `fall ${duration}s linear infinite`;
+        pill.style.animationDelay = `${Math.random() * 7}s`;
+        document.body.appendChild(pill);
+      }
+      document.querySelectorAll('.expand-btn').forEach(btn =>
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          expandCard(btn.closest('.enemy-card'));
+        })
+      );
+    });
+    function expandCard(card) {
+      card.classList.toggle('expanded');
+      const btn = card.querySelector('.expand-btn');
+      btn.setAttribute('aria-expanded', card.classList.contains('expanded'));
+    }
+  </script>
+</body>
+
+</html>
